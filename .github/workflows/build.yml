@@ -85,3 +85,16 @@ jobs:
         cd ../certifier_service/oelib
         make clean
         make dummy
+
+  islet-arm-cca:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      working-directory: third_party/islet
+      run: ./setup.sh
+
+    - name: Run islet tests (simulated on x86_64)
+      working-directory: src/cca/islet_test
+      run: make test
