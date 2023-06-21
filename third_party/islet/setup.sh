@@ -25,28 +25,37 @@ HERE="$CC_ROOT/third_party/islet"
 
 ISLET="$HERE/remote"
 ISLET_SDK="$ISLET/sdk"
+ISLET_CLI="$ISLET/cli"
 ISLET_INC="$HERE/include"
 ISLET_LIB="$HERE/lib"
+ISLET_TAG="certifier-v1.0.2-beta"
+ISLET_TOOL="$HERE/tool"
 
 TARGET_HDR="$ISLET_SDK/include/islet.h"
 TARGET_LIB="$ISLET/out/x86_64-unknown-linux-gnu/debug/libislet_sdk.so"
+TARGET_CLI="$ISLET_CLI/target/x86_64-unknown-linux-gnu/release/islet_cli"
 
-# Sync islet
+# Sync Islet
 cd "$HERE"
-wget https://github.com/Samsung/islet/archive/refs/tags/certifier-v1.0.1-beta.tar.gz
-tar xf certifier-v1.0.1-beta.tar.gz
+rm -rf "$ISLET_TAG.tar.gz"
+wget https://github.com/Samsung/islet/archive/refs/tags/$ISLET_TAG.tar.gz
+tar xf "$ISLET_TAG.tar.gz"
 rm -rf "$ISLET"
-mv islet-certifier-v1.0.1-beta "$ISLET"
+mv islet-$ISLET_TAG "$ISLET"
 
-# Install rust to build ISLET SDK
+# Install rust to build Islet SDK
 "$ISLET/scripts/deps/rust.sh"
 
 . "$HOME/.cargo/env"
-# Build ISLET SDK (simulated version for x86_64)
+# Build Islet SDK (simulated version for x86_64)
 cd "$ISLET_SDK" && cargo build
 
-mkdir -p "$ISLET_INC" "$ISLET_LIB"
+mkdir -p "$ISLET_INC" "$ISLET_LIB" "$ISLET_TOOL"
 cp -p "$TARGET_HDR" "$ISLET_INC"
 cp -p "$TARGET_LIB" "$ISLET_LIB"
+
+# Build Islet CLI
+cd "$ISLET_CLI" && cargo build -r --target=x86_64-unknown-linux-gnu
+cp -p "$TARGET_CLI" "$ISLET_TOOL"
 
 echo "Restart your shell or source ~/.bashrc"
