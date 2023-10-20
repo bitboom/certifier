@@ -15,8 +15,10 @@
 package isletverify
 
 /*
+#
 #cgo CFLAGS: -g -Wall -I ../isletlib
-#cgo LDFLAGS: -L ../isletlib -lisletverify -Wl,-rpath=./isletlib:../../certifier_service/isletlib:../../../certifier_service/isletlib
+#cgo LDFLAGS: -L ../isletlib -lisletverify -Wl,-rpath=./isletlib:../isletlib:../../certifier_service/isletlib:../../../certifier_service/isletlib
+
 #include "islet_verify.h"
 */
 import "C"

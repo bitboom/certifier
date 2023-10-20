@@ -21,7 +21,8 @@ endif
 #endif
 
 ifndef LOCAL_LIB
-LOCAL_LIB=/usr/local/lib
+#LOCAL_LIB=~/certifier-framework-for-confidential-computing/protobuf/src/.libs/
+#LOCAL_LIB=/usr/local/lib
 endif
 
 ifndef TARGET_MACHINE_TYPE
@@ -42,21 +43,28 @@ O= $(OBJ_DIR)
 ISLET_S=$(S)/islet
 US=.
 I= $(SRC_DIR)/include
-INCLUDE= -I. $(ISLET_INCLUDE) -I$(I) -I/usr/local/opt/openssl@1.1/include/ -I$(S)/sev-snp/ -I$(ISLET_S)
+INCLUDE= -I. $(ISLET_INCLUDE) -I$(I) -I/usr/local/opt/openssl@1.1/include/ -I$(S)/sev-snp/ -I$(ISLET_S) -I/usr/local/include
 COMMON_SRC = $(CERTIFIER_ROOT)/sample_apps/common
 
 # Compilation of protobuf files could run into some errors, so avoid using
 # # -Werror for those targets
-CFLAGS_NOERROR=$(INCLUDE) -O3 -g -Wall -std=c++11 -Wno-unused-variable -D X64 -Wno-deprecated-declarations -D ISLET_CERTIFIER
+CFLAGS_NOERROR=$(INCLUDE) -O3 -g -Wall -std=c++11 -Wno-unused-variable -D ARM64 -Wno-deprecated-declarations -D ISLET_CERTIFIER
 CFLAGS = $(CFLAGS_NOERROR) -Werror -DISLET_SIMPLE_APP
 
-CC=g++
-LINK=g++
+CC=aarch64-linux-gnu-g++
+LINK=aarch64-linux-gnu-g++
+#CC=g++
+#LINK=g++
+
 #PROTO=/usr/local/bin/protoc
 PROTO=protoc
-AR=ar
+AR=aarch64-linux-gnu-ar
+#AR=ar
 #export LD_LIBRARY_PATH=/usr/local/lib
-LDFLAGS= $(ISLET_LDFLAGS) -L $(LOCAL_LIB) -lprotobuf -lgtest -lgflags -lpthread -L/usr/local/opt/openssl@1.1/lib/ -lcrypto -lssl
+#LDFLAGS= $(ISLET_LDFLAGS) -L ./ -lprotobuf -lgtest -lgflags -lpthread -L/usr/local/opt/openssl@1.1/lib/ -lcrypto -lssl
+#xport LD_LIBRARY_PATH=~/certifier-framework-for-confidential-computing/protobuf/src/.libs/ 
+#export LIBRARY_PATH=~/certifier-framework-for-confidential-computing/protobuf/src/.libs/ 
+LDFLAGS= -L./ -lprotobuf $(ISLET_LDFLAGS) -lgtest -lgflags -lpthread -lcrypto -lssl
 
 # Note:  You can omit all the files below in d_obj except $(O)/example_app.o,
 #  if you link in the certifier library certifier.a.
@@ -76,7 +84,8 @@ clean:
 
 $(EXE_DIR)/islet_example_app.exe: $(dobj)
 	@echo "\nlinking executable $@$(dobj)"
-	$(LINK) $(dobj) $(LDFLAGS) -o $(@D)/$@
+	 $(LINK) $(dobj) $(LDFLAGS) -o $(@D)/$@
+#	$(LINK) $(dobj) -Wl,-rpath,$(LD_LIBRARY_PATH) $(LDFLAGS) -o $(@D)/$@
 
 $(I)/certifier.pb.h: $(US)/certifier.pb.cc
 $(US)/certifier.pb.cc: $(CP)/certifier.proto

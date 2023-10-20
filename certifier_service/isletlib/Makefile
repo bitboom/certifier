@@ -15,7 +15,7 @@ CERTIFIER_LDFLAGS += -lcrypto -lssl
 
 ISLET_PATH = $(CERTIFIER_ROOT)/third_party/islet
 ISLET_INCLUDE = -I $(ISLET_PATH)/include
-ISLET_LDFLAGS = -L $(ISLET_PATH)/lib -ldl -lislet_sdk
+ISLET_LDFLAGS = -L $(ISLET_PATH)/lib -ldl -lislet_sdk -Wl,-rpath=./
 
 CFLAGS += $(CERTIFIER_CFLAGS) $(ISLET_INCLUDE)
 CFLAGS += -g -Wall -Wno-unused-variable -Werror
