@@ -119,7 +119,7 @@ for the Islet enclave.
 cd $EXAMPLE_DIR/provisioning
 
 $CERTIFIER_PROTOTYPE/utilities/measurement_init.exe                              \
-    --mrenclave=6190EB90B293886C172EC644DAFB7E33EE2CEA6541ABE15300D96380DF525BF9 \
+    --mrenclave=abcf9785688ca951dff112148215fb0ad7b3828bd2a0157900c88c78f67dbf4e \
     --out_file=example_app.measurement
 ```
 
@@ -274,7 +274,7 @@ $EXAMPLE_DIR/islet_example_app.exe                       \
       --data_dir=./app2_data/                      \
       --operation=cold-init                        \
       --measurement_file="example_app.measurement" \
-      --policy_store_file=policy_store
+      --policy_store_file=policy_store \
       --print_all=true
 
 $EXAMPLE_DIR/islet_example_app.exe                       \

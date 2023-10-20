@@ -21,6 +21,7 @@ Install the latest protobuf from source by
 sudo apt install autoconf automake libtool curl make g++ unzip
 git clone https://github.com/protocolbuffers/protobuf.git
 cd protobuf
+git checkout 21.x
 git submodule update --init --recursive
 ./autogen.sh && ./configure
  make -j$(nproc)  &&  sudo make install
@@ -41,6 +42,8 @@ The protobuf compiler(protoc) for golang is installed by
 ```
 go get github.com/golang/protobuf/proto
 go get google.golang.org/protobuf/cmd/protoc-gen-go
+// go install github.com/golang/protobuf/proto@latest
+// go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 ```
 
 Ensure OpenSSL library and OpenSSL headers are installed or install by
@@ -54,7 +57,7 @@ Current tests on Ubuntu are with OpenSSL 1.1.1f.
 The certifier library can be compiled by 
 ```
  cd $CERTIFIER/src
- make -f certifier.mak
+ make -f certifier.mak // apt-get install uuid-dev
 
 cd $CERTIFIER/utilities
 make -f cert_utility.mak

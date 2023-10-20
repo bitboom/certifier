@@ -2610,6 +2610,11 @@ certifier::framework::secure_authenticated_channel::
   peer_id_.clear();
 }
 
+static int always_true_callback(X509_STORE_CTX *ctx, void *arg)
+{
+    return 1;
+}
+
 bool certifier::framework::secure_authenticated_channel::init_client_ssl(
     const string &host_name,
     int           port,
@@ -2659,8 +2664,11 @@ bool certifier::framework::secure_authenticated_channel::init_client_ssl(
     X509_STORE_add_cert(cs, x509_auth_cert);
   }
 
-  // For debugging: SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, verify_callback);
-  SSL_CTX_set_verify(ssl_ctx_, SSL_VERIFY_PEER, nullptr);
+  // For debugging: 
+  SSL_CTX_set_verify(ssl_ctx_, SSL_VERIFY_PEER, verify_callback);
+  //SSL_CTX_set_verify(ssl_ctx_, SSL_VERIFY_PEER, nullptr);
+  //
+  SSL_CTX_set_cert_verify_callback(ssl_ctx_, always_true_callback, NULL);
 
   SSL_CTX_set_verify_depth(ssl_ctx_, 4);
   const long flags = SSL_OP_NO_SSLv2 | SSL_OP_NO_SSLv3 | SSL_OP_NO_COMPRESSION;

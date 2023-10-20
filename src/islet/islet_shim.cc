@@ -31,6 +31,14 @@ bool islet_Init(const int cert_size, byte *cert) {
   return true;
 }
 
+/*
+static void print_buf(int sz, byte* buf) {
+  for (int i = 0; i < sz; i++)
+    printf("%02x", buf[i]);
+  printf("\n");
+}
+*/
+
 bool islet_Attest(const int what_to_say_size,
                   byte *    what_to_say,
                   int *     attestation_size_out,
@@ -51,17 +59,15 @@ bool islet_Attest(const int what_to_say_size,
                                    len,
                                    attestation_out,
                                    attestation_size_out);
+
+  printf("Delegated attestation via HES on Arm CCA.\n");
   printf("%s(): rv=%d\n", __func__, rv);
+
+//  printf("[!] Attest: attestation_out len: %d\n", *attestation_size_out);
+//  print_buf(*attestation_size_out, attestation_out);
+
   return rv == ISLET_SUCCESS;
 }
-
-#if 0
-static void print_buf(int sz, byte* buf) {
-  for (int i = 0; i < sz; i++)
-    printf("%02x", buf[i]);
-  printf("\n");
-}
-#endif
 
 bool islet_Verify(const int what_to_say_size,
                   byte *    what_to_say,
