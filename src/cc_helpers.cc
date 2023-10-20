@@ -2817,6 +2817,7 @@ void certifier::framework::secure_authenticated_channel::
         void (*func)(secure_authenticated_channel &)) {
 
   // accept and carry out auth
+  SSL_CTX_set_verify(SSL_get_SSL_CTX(ssl_), SSL_VERIFY_PEER, NULL);
   int res = SSL_accept(ssl_);
   if (res != 1) {
     printf("%s() error, line %d, Can't SSL_accept connection"

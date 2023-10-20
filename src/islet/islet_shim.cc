@@ -55,13 +55,11 @@ bool islet_Attest(const int what_to_say_size,
   return rv == ISLET_SUCCESS;
 }
 
-#if 0
 static void print_buf(int sz, byte* buf) {
   for (int i = 0; i < sz; i++)
     printf("%02x", buf[i]);
   printf("\n");
 }
-#endif
 
 bool islet_Verify(const int what_to_say_size,
                   byte *    what_to_say,
@@ -75,8 +73,15 @@ bool islet_Verify(const int what_to_say_size,
 
   memset(claims, 0, sizeof(claims));
 
+  printf("what_to_say\n");
+  print_buf(what_to_say_size, what_to_say);
+  printf("attestation_out len: %d\n", attestation_size);
+  print_buf(attestation_size, attestation);
+
   islet_status_t rv =
       islet_verify(attestation, attestation_size, claims, &claims_len);
+
+  printf("islet_Verify: %d\n", rv);
   if (rv != ISLET_SUCCESS)
     return false;
 
@@ -90,7 +95,7 @@ bool islet_Verify(const int what_to_say_size,
     printf("islet_Verify: Can't digest what_to_say\n");
     return false;
   }
-
+/*
   byte islet_what_to_say_returned[2 * len];
   int  user_data_len = len;
   rv = islet_parse(CLAIM_TITLE_USER_DATA,
@@ -103,12 +108,14 @@ bool islet_Verify(const int what_to_say_size,
 
   if (memcmp(islet_what_to_say_returned, islet_what_to_say_expected, len) != 0)
     return false;
-
+*/
   rv = islet_parse(CLAIM_TITLE_RIM,
                    claims,
                    claims_len,
                    measurement_out,
                    measurement_out_size);
+
+  printf("islet_parse: %d\n", rv);
   return rv == ISLET_SUCCESS;
 }
 

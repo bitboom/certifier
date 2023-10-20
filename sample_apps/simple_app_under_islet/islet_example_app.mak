@@ -33,7 +33,7 @@ endif
 CERT_ROOT = ../..
 ISLET_PATH = $(CERT_ROOT)/third_party/islet
 ISLET_INCLUDE= -I$(ISLET_PATH)/include
-ISLET_LDFLAGS= -L$(ISLET_PATH)/lib -lislet_sdk
+ISLET_LDFLAGS= -L./ -lislet_sdk
 
 CP = $(CERTIFIER_ROOT)/certifier_service/certprotos
 

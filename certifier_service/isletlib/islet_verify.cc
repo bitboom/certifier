@@ -31,7 +31,7 @@ bool isletlib_Verify(const int what_to_say_size,
                         measurement_out_size,
                         measurement_out);
   if (!result) {
-    printf("%s:%d: %s() failed\n", __FILE__, __LINE__, __func__);
+    printf("%s:%d: %s() failed %d\n", __FILE__, __LINE__, __func__, result);
     return false;
   }
 

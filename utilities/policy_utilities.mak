@@ -51,7 +51,7 @@ LINK=g++
 PROTO=protoc
 AR=ar
 #export LD_LIBRARY_PATH=/usr/local/lib
-LDFLAGS= -L $(LOCAL_LIB) -lprotobuf -lgtest -lgflags -lpthread -L/usr/local/opt/openssl@1.1/lib/ -lcrypto -lssl
+LDFLAGS= -L $(LOCAL_LIB) -lprotobuf -lgtest -lgflags -lpthread -lcrypto -lssl
 
 common_objs = $(O)/support.o $(O)/certifier.o $(O)/certifier_proofs.o \
               $(O)/certifier.pb.o $(O)/simulated_enclave.o \
