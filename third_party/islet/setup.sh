@@ -36,7 +36,10 @@ cd "$HERE"
 rm -rf "$ISLET"
 git clone https://github.com/islet-project/islet.git "$ISLET"
 cd "$ISLET"
-git submodule update --init --depth 1 $ISLET/assets
+
+# Tmp
+git checkout certifier-ci
+
 git submodule update --init --depth 1 $ISLET/third-party/ciborium
 git submodule update --init --depth 1 $ISLET/third-party/coset
 
@@ -45,7 +48,7 @@ git submodule update --init --depth 1 $ISLET/third-party/coset
 
 . "$HOME/.cargo/env"
 # Build ISLET SDK (simulated version for x86_64)
-cd "$ISLET_SDK" && make simulated
+cd "$ISLET_SDK" && make simulated-sys
 
 mkdir -p "$ISLET_INC" "$ISLET_LIB"
 cp -p "$TARGET_HDR" "$ISLET_INC"
